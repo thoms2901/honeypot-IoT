@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Shelly IoT Smart Plug</title>
+	<link rel="stylesheet" href="static/styles/shelly.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Shelly IoT Smart Plug</h1>
+		<div class="power-status">
+			<h2>Power Status:</h2>
+			<p id="power-text"></p>
+		</div>
+		<div class="controls">
+			<button id="on-button" onclick="turnOn()">Turn On</button>
+			<button id="off-button" onclick="turnOff()">Turn Off</button>
+		</div>
+	</div>
+	<script src="static/scripts/shelly.js"></script>
+</body>
+</html>

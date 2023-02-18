@@ -81,6 +81,9 @@ class ImageHandler(tornado.web.RequestHandler):
 		}
 
 
+class ShellyHandler(tornado.web.RequestHandler):
+	def get(self):
+		return self.render("templates/shelly.html")
 
 class HomeHandler(tornado.web.RequestHandler):
 	settings = {
@@ -107,7 +110,7 @@ class RootHandler(tornado.web.RequestHandler):
 	def post(self):
 		username = self.get_argument("username")
 		password = self.get_argument("password")
-		if username == "admin" and password == "password":
+		if username == "admin" and password == "hope":
 			self.set_secure_cookie("username", username)
 			self.redirect("/home")
 		else:
@@ -125,8 +128,9 @@ class ServerHeaderTransform(tornado.web.OutputTransform):
 application = tornado.web.Application([
 	(r'/camera', ImageHandler),
 	(r'/home', HomeHandler),
+	(r'/shelly', ShellyHandler),
 	(r'/', RootHandler),
-	# (r'/(favicon\.ico)', tornado.web.StaticFileHandler, {'path': 'static/'}),
+	(r'/(favicon\.ico)', tornado.web.StaticFileHandler, {'path': 'static/'}),
 	(r'/static/(.*)', tornado.web.StaticFileHandler, {'path': 'static/'}),
 ], transforms=[ServerHeaderTransform], cookie_secret=cookie_secret)
 
