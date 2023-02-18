@@ -15,5 +15,5 @@ Usage:
 python camera.py
 ```
 For login:
-- username: `username`
+- username: `admin`
 - password: `password`
