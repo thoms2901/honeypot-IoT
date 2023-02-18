@@ -107,7 +107,7 @@ class RootHandler(tornado.web.RequestHandler):
 	def post(self):
 		username = self.get_argument("username")
 		password = self.get_argument("password")
-		if username == "admin" and password == "hope":
+		if username == "admin" and password == "password":
 			self.set_secure_cookie("username", username)
 			self.redirect("/home")
 		else:
