@@ -1,0 +1,19 @@
+body {
+    background-color: #f7f7f7;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+  #image-container {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  h1 {
+    text-align: center;
+  }
