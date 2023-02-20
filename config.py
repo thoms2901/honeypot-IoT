@@ -1,0 +1,9 @@
+REFRESH_TIME = 2
+PORT = 80
+USERNAME = "admin"
+PASSWORD = "hope"
+CAMERA_NAME = "Videocamera n.12"
+CAMERA_DESCRIPTION = "(c) 2023 by COMPANY Engineering AG"
+IMAGES_DIR = "img/"
+IMAGES_DIR_PROC = "img_proc/"
+SERVER_HEADER_NAME = "Mongoose/6.18"

@@ -8,6 +8,8 @@ from PIL import Image, ImageDraw, ImageEnhance
 import base64
 import uuid
 
+import config
+
 cookie_secret = base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)
 
 class CameraImageProcessor():
@@ -32,7 +34,7 @@ class CameraImageProcessor():
 
 class ImageClass():
 	def __init__(self):
-		self.images = [file for file in os.listdir("img/") if file.endswith(".jpeg")]
+		self.images = [file for file in os.listdir(config.IMAGES_DIR) if file.endswith(".jpeg")]
 		self.counter = 0
 	
 	def getImage(self):
@@ -58,11 +60,11 @@ class ImageHandler(tornado.web.RequestHandler):
 			# # TODO: Do not process if current
 			global image
 			img_name = image.getImage()
-			img_proc_filename = "img_proc/" + img_name
-			img_filename = "img/" + img_name
+			img_proc_filename = config.IMAGES_DIR_PROC + img_name
+			img_filename = config.IMAGES_DIR + img_name
 
 			cip = CameraImageProcessor(img_filename, img_proc_filename)
-			cip.process("CAM12", "(c) 2023 by COMPANY Engineering AG")
+			cip.process(config.CAMERA_NAME, config.CAMERA_DESCRIPTION)
 
 
 			for hk, hv in self.image_headers(img_proc_filename).items():
@@ -87,8 +89,8 @@ class ShellyHandler(tornado.web.RequestHandler):
 
 class HomeHandler(tornado.web.RequestHandler):
 	settings = {
-		'title': 'Videocamera n.12',
-		'refresh': 2,
+		'title': config.CAMERA_NAME,
+		'refresh': config.REFRESH_TIME,
 	}
 	
 	def get(self):
@@ -110,7 +112,7 @@ class RootHandler(tornado.web.RequestHandler):
 	def post(self):
 		username = self.get_argument("username")
 		password = self.get_argument("password")
-		if username == "admin" and password == "hope":
+		if username == config.USERNAME and password == config.PASSWORD:
 			self.set_secure_cookie("username", username)
 			self.redirect("/home")
 		else:
@@ -121,7 +123,7 @@ image = ImageClass()
 
 class ServerHeaderTransform(tornado.web.OutputTransform):
     def transform_first_chunk(self, status_code, headers, chunk, finishing):
-        headers['Server'] = "Mongoose/6.18"
+        headers['Server'] = config.SERVER_HEADER_NAME
         return status_code, headers, chunk
 
 
@@ -135,6 +137,6 @@ application = tornado.web.Application([
 ], transforms=[ServerHeaderTransform], cookie_secret=cookie_secret)
 
 if __name__ == "__main__":
-	application.listen(80)
+	application.listen(config.PORT)
 	tornado.ioloop.IOLoop.instance().start()
 
